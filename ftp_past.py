@@ -3,8 +3,18 @@ from ftplib import FTP
 import time
 import datetime
 
+# 処理時間計測のためのデコレータ
+def stopwatch(func):
+  def wrapper(*args, **kwargs):
+    print('処理を開始します。')
+    start = time.time()
+    func(*args, **kwargs)
+    total_time = time.time() - start
+    print('処理を終了しました。トータルタイムは:{0}'.format(total_time)+"[sec]です。")
+  return wrapper
+
 # PATH's infomations
-local_path = "./log"
+local_path = "./log/"
 server_path = "LOGGING/LOG01/"
 
 # Server's infomations
@@ -25,6 +35,16 @@ def diff_local_server(server, server_path, local_path):
     # listにlistを追加させるのでapendではなくextendになる箇所が注意
     server_files.extend(server.nlst(server_path + i)[3:])
   set_local_server = set(server_files) - set(local_files)
-  return print(list(set_local_server))
+  return list(set_local_server)
 
-diff_local_server(server, server_path, local_path)
+@stopwatch
+def ftp_get_write_past(server, server_path, local_path):
+  for i in diff_local_server(server, server_path, local_path):
+    get_time = time.time()
+    with open(local_path + i, 'wb') as f:
+      server.retrbinary('RETR %s' % './LOGGING/LOG01/00000001/{0}'.format(i), f.write)
+      print(i + " done")
+    print('処理時間は%s [sec]\n' % (time.time() - get_time))
+  return None
+
+ftp_get_write_past(server, server_path, local_path)
