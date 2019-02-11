@@ -58,14 +58,3 @@ def diff_imported(path_logs):
     imported_list = r.read().split()
   set_imported = set(before_import_list) - set(imported_list)
   return set_imported
-
-# client = InfluxDB_CSV(
-#   host='192.168.30.121',
-#   port=8086,
-#   username='root',
-#   password='root',
-#   database='mydb_mac'
-#   )
-
-# csv_path = 'log/20180908_235959_0000000E.CSV'
-# client.import_csv(csv_path, 'hpcs')
