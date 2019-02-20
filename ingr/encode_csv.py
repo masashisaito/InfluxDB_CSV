@@ -64,4 +64,5 @@ def encode_csv(benc_dir, aenc_dir):
   return None
 
 # For example...
+# encode_csvfile('/Users/Daiki/Desktop/research/log/20180920_235959_0000001C.CSV', '/Users/Daiki/Desktop/research/log_encoded')
 # encode_csv('/Users/Daiki/Desktop/research/log','/Users/Daiki/Desktop/research/log_encoded2')
