@@ -21,29 +21,31 @@ def ftp_get(host, filename):
 
 
 class FTP_KIT(FTP):
-  def __init__(self, host=None, user=None, passwd=None, remote_file=None, local_file=None):
+  def __init__(self, host=None, switch=True, user=None, passwd=None, remote_file=None, local_file=None):
     # super関数は2系3系, 違う
     super().__init__(host, user, passwd)
+    self.switch = switch
     self.remote_file = remote_file
     self.local_file = local_file
   def ftp_get(self):
-    with open(self.local_file, 'wb') as f:
-      print('Getting %s' % self.remote_file)
-      self.retrbinary('RETR %s' % self.remote_file, f.write)
-      print('%s done' % self.remote_file)
+    if self.switch == 0:
+      print('%s がFalseになっています。' % self.host)
+    else:
+      with open(self.local_file, 'wb') as f:
+        print('Getting %s' % self.remote_file)
+        self.retrbinary('RETR %s' % self.remote_file, f.write)
+        print('%s done' % self.remote_file)
 
-
-# [Config infomations]
-
-client = FTP_KIT(
-  host='172.24.7.227',
-  user=' ',
-  passwd=' ',
-  remote_file='LOGGING/LOG01/LOG01.CSV',
-  local_file='biomus.csv'
-  )
-
-client.ftp_get()
+if __name__ == "__main__":
+  client = FTP_KIT(
+    switch=False,
+    host='172.24.7.227',
+    user=' ',
+    passwd=' ',
+    remote_file='LOGGING/LOG01/LOG01.CSV',
+    local_file='biomus.csv'
+    )
+  client.ftp_get()
 
 
 # For Example...

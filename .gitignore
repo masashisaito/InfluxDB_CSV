@@ -1,4 +1,4 @@
 log/
-log_encoded/
+log_*/
 *.pyc
 import_file_list.csv
