@@ -1,4 +1,5 @@
 from ftplib import FTP
+import socket
 import time
 
 # 処理時間計測のためのデコレータ
@@ -28,13 +29,16 @@ class FTP_KIT(FTP):
     self.remote_file = remote_file
     self.local_file = local_file
   def ftp_get(self):
-    if self.switch == 0:
-      print('%s がFalseになっています。' % self.host)
-    else:
-      with open(self.local_file, 'wb') as f:
-        print('Getting %s' % self.remote_file)
-        self.retrbinary('RETR %s' % self.remote_file, f.write)
-        print('%s done' % self.remote_file)
+    try:
+      if self.switch == 0:
+        print('%s がFalseになっています。' % self.host)
+      else:
+        with open(self.local_file, 'wb') as f:
+          print('Getting %s' % self.remote_file)
+          self.retrbinary('RETR %s' % self.remote_file, f.write)
+          print('%s done' % self.remote_file)
+    except socket.gaierror:
+      return print('%s に接続出来ませんでした。' % self.host)
 
 if __name__ == "__main__":
   client = FTP_KIT(
