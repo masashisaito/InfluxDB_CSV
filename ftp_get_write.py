@@ -1,4 +1,4 @@
-from ftplib import FTP
+from ftplib import FTP, error_perm
 import socket
 import time
 
@@ -34,9 +34,9 @@ class FTP_KIT(FTP):
         print('%s がFalseになっています。' % self.host)
       else:
         with open(self.local_file, 'wb') as f:
-          print('Getting %s' % self.remote_file)
           self.retrbinary('RETR %s' % self.remote_file, f.write)
           print('%s done' % self.remote_file)
+          print('Getting Success!!')
     except socket.gaierror:
       return print('%s に接続出来ませんでした。' % self.host)
 

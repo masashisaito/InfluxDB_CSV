@@ -4,6 +4,7 @@ import configparser
 import socket
 from distutils.util import strtobool
 
+
 # Set TimeoutError default time
 socket.setdefaulttimeout(5.0)
 
@@ -25,13 +26,19 @@ def main_ftp():
       remote_file = config.items(svs)[4][1]
       local_file = config.items(svs)[5][1]
       try:
+        print('\n[%s]' % svs)
         client = FTP_KIT(switch=switch, host=host, user=user, passwd=passwd, remote_file=remote_file, local_file=local_file)
         client.ftp_get()
+      except error_perm:
+        print('%s: %s 保存する対象のパスを確認してください。' % (host,remote_file))
+      except FileNotFoundError:
+        print('%s: %s 保存するパスが間違っています。' % (host,local_file))
       except socket.gaierror:
-        print('%s に接続出来ませんでした。' % host)
+        print('%s: 接続出来ませんでした。' % host)
       except socket.timeout:
-        print('%s はタイムアウトでした。' % host)
+        print('%s: タイムアウトでした。' % host)
     except IndexError:
       print("[%s] 内で入力情報が欠損しています。" % svs)
 
 main_ftp()
+hpcs_get()
