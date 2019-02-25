@@ -1,4 +1,6 @@
-log/
-log_*/
+log*/
 *.pyc
+.vscode/*
+config.ini
 import_file_list.csv
+
