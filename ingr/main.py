@@ -4,12 +4,13 @@ import os
 from tqdm import tqdm
 from configparser import ConfigParser
 
-
+# Server infomation
 client = import_csv.InfluxDB_CSV(
   host='192.168.30.121',
   port=8086,
   username='root',
   password='root',
+  # If you don't have a database yet you need to create a new database
   database='mydb_mac'
   )
 
