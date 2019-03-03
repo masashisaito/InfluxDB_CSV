@@ -28,7 +28,7 @@ def ftp_svs():
 def ftp_conlog(ftpob):
   try:
     ftpob.connect()
-    print('コネクト成功: ログインします')
+    print('%s: コネクト成功: ログインします' % ftpob.host)
     try:
       ftpob.login()
       print('%s: ログイン成功' % ftpob.host)
