@@ -32,6 +32,10 @@ def ftp_conlog(ftpob):
     try:
       ftpob.login()
       print('%s: ログイン成功' % ftpob.host)
+      try:
+        ftp_get()
+      except FileNotFoundError:
+        print('%s: %s 保存先のパスを確認ください。' % (ftpob.host, ftpob.local_host))
     except error_perm:
       print('%s: ログイン失敗、ユーザ、パスワード情報を確認してください。' % ftpob.host)
 
