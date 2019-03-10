@@ -1,6 +1,7 @@
 from ftp_get_write import *
 from ftp_get_write_hpcs import hpcs_get
-import configparser
+from configparser import ConfigParser
+import os
 import socket
 from distutils.util import strtobool
 
@@ -9,8 +10,10 @@ from distutils.util import strtobool
 socket.setdefaulttimeout(5.0)
 
 # [Config infomations]
-config = configparser.ConfigParser()
-config.read('config.ini')
+pwd = os.path.normpath('%s/../' % __file__)
+config_path = os.path.join(pwd, 'config.ini')
+config = ConfigParser()
+config.read(config_path)
 
 # All server list
 server = config.sections()
