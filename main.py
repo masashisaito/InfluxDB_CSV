@@ -44,4 +44,4 @@ def main_ftp():
       print("[%s] 内で入力情報が欠損しています。" % svs)
 
 main_ftp()
-hpcs_get()
+hpcs_get(config)

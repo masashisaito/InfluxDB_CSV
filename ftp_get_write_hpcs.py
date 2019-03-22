@@ -12,13 +12,16 @@ config = configparser.ConfigParser()
 config.read('config.ini')
 
 # Function of FTP to HPCS
-def hpcs_get():
-  # HPCS's FTP infomation
-  HPCS_host = config.items("HPCS")[1][1]
-  HPCS_user = config.items("HPCS")[2][1]
-  HPCS_passwd = config.items("HPCS")[3][1]
-  HPCS_remote_file = datetime.now().strftime("%Y/%m/%d").replace("/", "-") + ".csv"
-  HPCS_local_file = config.items("HPCS")[5][1]
+def hpcs_get(config):
+  try:
+    # HPCS's FTP infomation
+    HPCS_host = config.items("HPCS")[1][1]
+    HPCS_user = config.items("HPCS")[2][1]
+    HPCS_passwd = config.items("HPCS")[3][1]
+    HPCS_remote_file = datetime.now().strftime("%Y/%m/%d").replace("/", "-") + ".csv"
+    HPCS_local_file = config.items("HPCS")[5][1]
+  except:
+    pass
   try:
     print('\n[HPCS]')
     HPCS_client = FTP_KIT(host=HPCS_host, user=HPCS_user, passwd=HPCS_passwd, remote_file=HPCS_remote_file, local_file=HPCS_local_file)
@@ -33,6 +36,8 @@ def hpcs_get():
     print('%s: タイムアウトでした。' % HPCS_host)
   except socket.gaierror:
     print('%s に接続出来ませんでした。' % HPCS_host)
+  except UnboundLocalError:
+    print('HPCSキーがないため、HPCS機能をオフにします。')
 
 if __name__ == "__main__":
-    hpcs_get()
+    hpcs_get(config)
